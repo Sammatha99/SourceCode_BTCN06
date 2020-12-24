@@ -1,0 +1,6 @@
+language: csharp
+solution: SourceCode.sln
+mono: none
+dotnet: 3.1
+script:
+  - dotnet test Lib.Tests/Lib.Tests.csproj
