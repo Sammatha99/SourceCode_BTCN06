@@ -27,9 +27,9 @@ namespace SourceCode
                 Console.WriteLine(IsAllMyPoint());
                 return;
             }
-            edge1 = Point.getDistanceBetween2MyPoints(MyPoints[0], MyPoints[1]);
-            edge2 = Point.getDistanceBetween2MyPoints(MyPoints[0], MyPoints[2]);
-            edge3 = Point.getDistanceBetween2MyPoints(MyPoints[2], MyPoints[1]);
+            edge1 = Point.getDistanceBetween2Points(MyPoints[0], MyPoints[1]);
+            edge2 = Point.getDistanceBetween2Points(MyPoints[0], MyPoints[2]);
+            edge3 = Point.getDistanceBetween2Points(MyPoints[2], MyPoints[1]);
             if (IsATriangle())
             {
                 Console.WriteLine($"Loại tam giác:{GetTypeOfTriangle()}\n");
@@ -43,7 +43,7 @@ namespace SourceCode
         {
             for (int i = 0; i < 3; i++)
             {
-                if (!MyPoints[i].IsAMyPoint())
+                if (!MyPoints[i].IsAPoint())
                 {
                     return $"Điểm {i + 1} không hợp lệ";
                 }
