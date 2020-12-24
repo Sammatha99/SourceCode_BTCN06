@@ -19,6 +19,12 @@ namespace SourceCode
             MyPoints = points;
         }
 
+        public Triangle(double edge1, double edge2, double edge3)
+        {
+            this.edge1 = edge1;
+            this.edge2 = edge2;
+            this.edge3 = edge3;
+        }
 
         public void Result()
         {

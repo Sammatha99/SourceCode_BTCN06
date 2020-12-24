@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SourceCode;
 using System;
 using System.Globalization;
@@ -12,12 +12,13 @@ namespace Lib.Tests
         double Delta = 0.00001;
         Point point1;
         Point point2;
+        Triangle triangle;
 
         [TestMethod]
         [DataRow("1", "1" ,"1")]
         [DataRow("1.", "1" ,"1")]
-        [DataRow("a", "1" ,"1")]
-        [DataRow("1^2", "1" ,"1")]
+        [DataRow("a", "1" ,"0")]
+        [DataRow("1^2", "1" ,"0")]
         public void TestIsAPoint(string x, string y, string expectedResult)
         {
             bool IsPoint = expectedResult == "0" ? false : true;
@@ -27,7 +28,7 @@ namespace Lib.Tests
 
         [TestMethod]
         [DataRow("1", "1", "2","-3", "4.123105626")]
-        [DataRow("1", "2", "2","-3", "2.828427125")]
+        [DataRow("1", "2", "3","4", "2.828427125")]
         [DataRow("-1", "-2", "0","3", "5.099019514")]
         public void TestGetDistanceBetween2Points(string x1, string y1, string x2, string y2, string expectedResult)
         {
@@ -38,5 +39,37 @@ namespace Lib.Tests
             Assert.IsTrue(Math.Abs(result - ExpectedResult) < Delta);
         }
 
+        [TestMethod]
+        [DataRow("2", "2", "2", "1")]
+        [DataRow("3", "4", "5", "1")]
+        [DataRow("2", "2", "4", "0")]
+        public void TestIsAtriangle(double edge1, double edge2, double edge3, string expectedResult)
+        {
+            triangle = new Triangle(edge1, edge2, edge3);
+            bool IsTriangle = expectedResult == "0" ? false : true;
+            Assert.AreEqual(IsTriangle, triangle.IsATriangle());
+        }
+
+        [TestMethod]
+        [DataRow(2, 2, 2, "đều")]
+        [DataRow(3, 4, 5, "vuông")]
+        [DataRow(2, 2, 2.83, "vuông cân")]
+        [DataRow(4, 7.21, 10.77, "thường")]
+        public void TestGetTypeOfTriangle(double edge1, double edge2, double edge3, string expectedResult)
+        {
+            triangle = new Triangle(edge1, edge2, edge3);
+            Assert.AreEqual(expectedResult.ToLower(), triangle.GetTypeOfTriangle().Trim().ToLower());
+        }
+
+        [TestMethod]
+        [DataRow(2, 2, 2, 6)]
+        [DataRow(3, 4, 5, 12)]
+        [DataRow(2, 2, 2.83, 6.83)]
+        [DataRow(4, 7.21, 10.77, 21.98)]
+        public void TestGetPerimeter(double edge1, double edge2, double edge3, double expectedResult)
+        {
+            triangle = new Triangle(edge1, edge2, edge3);
+            Assert.IsTrue(Math.Abs(triangle.GetPerimeter() - expectedResult) < Delta);
+        }
     }
 }
