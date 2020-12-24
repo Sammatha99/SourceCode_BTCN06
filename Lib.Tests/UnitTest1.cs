@@ -15,45 +15,42 @@ namespace Lib.Tests
         Triangle triangle;
 
         [TestMethod]
-        [DataRow("1", "1" ,"1")]
-        [DataRow("1.", "1" ,"1")]
-        [DataRow("a", "1" ,"0")]
-        [DataRow("1^2", "1" ,"0")]
-        public void TestIsAPoint(string x, string y, string expectedResult)
+        [DataRow("1", "1" ,true)]
+        [DataRow("1.", "1" ,true)]
+        [DataRow("a", "1" ,false)]
+        [DataRow("1^2", "1" ,false)]
+        public void TestIsAPoint(string x, string y, bool expectedResult)
         {
-            bool IsPoint = expectedResult == "0" ? false : true;
             point1 = new Point(x, y);
-            Assert.AreEqual(IsPoint, point1.IsAPoint());
+            Assert.AreEqual(expectedResult, point1.IsAPoint());
         }
 
         [TestMethod]
-        [DataRow("1", "1", "2","-3", "4.123105626")]
-        [DataRow("1", "2", "3","4", "2.828427125")]
-        [DataRow("-1", "-2", "0","3", "5.099019514")]
-        public void TestGetDistanceBetween2Points(string x1, string y1, string x2, string y2, string expectedResult)
+        [DataRow("1", "1", "2","-3", 4.123105626)]
+        [DataRow("1", "2", "3","4", 2.828427125)]
+        [DataRow("-1", "-2", "0","3", 5.099019514)]
+        public void TestGetDistanceBetween2Points(string x1, string y1, string x2, string y2, double expectedResult)
         {
             point1 = new Point(x1, y1);
             point2 = new Point(x2, y2);
             double result = Point.getDistanceBetween2Points(point1, point2);
-            double ExpectedResult = double.Parse(expectedResult, CultureInfo.InvariantCulture.NumberFormat);
-            Assert.IsTrue(Math.Abs(result - ExpectedResult) < Delta);
+            Assert.IsTrue(Math.Abs(result - expectedResult) < Delta);
         }
 
         [TestMethod]
-        [DataRow("2", "2", "2", "1")]
-        [DataRow("3", "4", "5", "1")]
-        [DataRow("2", "2", "4", "0")]
-        public void TestIsAtriangle(double edge1, double edge2, double edge3, string expectedResult)
+        [DataRow(2, 2, 2, true)]
+        [DataRow(3, 4, 5, true)]
+        [DataRow(2, 2, 4, false)]
+        public void TestIsAtriangle(double edge1, double edge2, double edge3, bool expectedResult)
         {
             triangle = new Triangle(edge1, edge2, edge3);
-            bool IsTriangle = expectedResult == "0" ? false : true;
-            Assert.AreEqual(IsTriangle, triangle.IsATriangle());
+            Assert.AreEqual(expectedResult, triangle.IsATriangle());
         }
 
         [TestMethod]
         [DataRow(2, 2, 2, "đều")]
         [DataRow(3, 4, 5, "vuông")]
-        [DataRow(2, 2, 2.83, "vuông cân")]
+        [DataRow(2, 2, 2.828427125, "vuông cân")]
         [DataRow(4, 7.21, 10.77, "thường")]
         public void TestGetTypeOfTriangle(double edge1, double edge2, double edge3, string expectedResult)
         {
